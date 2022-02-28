@@ -15,8 +15,6 @@ def home():
 
 @app.get("/prediction")
 def get_prediction(data: str):
-    print(data)
-    print(type(data))
     predicted_tags = model.predict([data])
     return {'Tags': mlb.inverse_transform(predicted_tags)}
 

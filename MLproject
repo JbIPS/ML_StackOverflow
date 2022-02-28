@@ -1,5 +1,0 @@
-name: PStack
-
-entry_points:
-  main:
-    command: "python P5_models.py"
