@@ -18,7 +18,7 @@ def main():
 
     st.title('Automatic tag assignment')
 
-    post = st.text_input('Contenu du post')
+    post = st.text_area('Contenu du post')
 
     predict_btn = st.button('Prédire')
     if predict_btn:
