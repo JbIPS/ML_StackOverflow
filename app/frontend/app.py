@@ -3,7 +3,7 @@ import requests
 
 
 def request_prediction(model_uri, data):
-    response = requests.get(url=model_uri, params={"data": data})
+    response = requests.post(url=model_uri, json={"postContent": data})
 
     if response.status_code != 200:
         raise Exception(

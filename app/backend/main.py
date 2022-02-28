@@ -1,6 +1,12 @@
 import uvicorn
 import joblib
 from fastapi import FastAPI
+from pydantic import BaseModel
+
+
+class Post(BaseModel):
+    postContent: str
+
 
 app = FastAPI()
 
@@ -13,9 +19,10 @@ def home():
     return {"Hello": "World"}
 
 
-@app.get("/prediction")
-def get_prediction(data: str):
-    predicted_tags = model.predict([data])
+@app.post("/prediction")
+def get_prediction(post: Post):
+    post_data = post.dict()
+    predicted_tags = model.predict([post_data['postContent']])
     return {'Tags': mlb.inverse_transform(predicted_tags)}
 
 
