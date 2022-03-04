@@ -1,5 +1,5 @@
 import uvicorn
-import joblib
+import cloudpickle
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -10,8 +10,8 @@ class Post(BaseModel):
 
 app = FastAPI()
 
-model = joblib.load('pipeline.joblib')
-mlb = joblib.load('mlb.joblib')
+with open('./pipeline.pkl', 'rb') as f:
+    model = cloudpickle.load(f)
 
 
 @app.get("/")
@@ -23,7 +23,7 @@ def home():
 def get_prediction(post: Post):
     post_data = post.dict()
     predicted_tags = model.predict([post_data['postContent']])
-    return {'Tags': mlb.inverse_transform(predicted_tags)}
+    return {'Tags': predicted_tags}
 
 
 if __name__ == "__main__":
